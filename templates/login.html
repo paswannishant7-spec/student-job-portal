@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+{% block title %}Login – Student Job Portal{% endblock %}
+
+{% block content %}
+<div class="auth-wrapper">
+  <div class="auth-card">
+    <div class="auth-logo"><span>🔐</span></div>
+    <h2>Welcome Back</h2>
+    <p class="subtitle">Sign in to your account to continue</p>
+
+    <form method="POST" action="{{ url_for('login') }}">
+      <div class="form-group">
+        <label class="form-label" for="email">Email Address</label>
+        <input class="form-control" type="email" id="email" name="email"
+               placeholder="your@email.com" required
+               value="{{ request.form.get('email','') }}">
+      </div>
+      <div class="form-group">
+        <label class="form-label" for="password">Password</label>
+        <input class="form-control" type="password" id="password" name="password"
+               placeholder="Your password" required>
+      </div>
+      <button type="submit" class="btn btn-primary btn-block btn-lg">
+        Sign In
+      </button>
+    </form>
+
+    <hr class="divider">
+
+    <div style="background:#f8fafc; border:1px solid #e2e8f0; border-radius:8px; padding:1rem; font-size:.85rem; color:#475569; margin-bottom:1rem;">
+      <strong>🔑 Admin Login:</strong><br>
+      Email: <code>admin@portal.com</code><br>
+      Password: <code>Admin@123</code>
+    </div>
+
+    <div class="auth-footer">
+      New student? <a href="{{ url_for('register') }}">Create a free account</a>
+    </div>
+  </div>
+</div>
+{% endblock %}

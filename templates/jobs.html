@@ -1,0 +1,64 @@
+{% extends "base.html" %}
+{% block title %}Browse Jobs – Student Job Portal{% endblock %}
+
+{% block content %}
+<div class="container page-wrapper">
+  <div class="page-header">
+    <h1>💼 Browse Jobs</h1>
+    <p>Find the right opportunity and apply in minutes.</p>
+  </div>
+
+  <!-- Search -->
+  <form method="GET" action="{{ url_for('jobs') }}">
+    <div class="search-bar">
+      <input class="form-control" type="text" name="search"
+             placeholder="🔍  Search by job title, company, or location..."
+             value="{{ search or '' }}">
+      <button type="submit" class="btn btn-primary">Search</button>
+      {% if search %}
+        <a href="{{ url_for('jobs') }}" class="btn btn-secondary">Clear</a>
+      {% endif %}
+    </div>
+  </form>
+
+  {% if search %}
+    <p style="margin-bottom:1.5rem; color:#64748b; font-size:.9rem;">
+      Showing results for "<strong>{{ search }}</strong>" — {{ jobs|length }} job(s) found
+    </p>
+  {% endif %}
+
+  {% if jobs %}
+    <div class="jobs-grid">
+      {% for job in jobs %}
+      <div class="job-card">
+        <div class="job-card-title">{{ job.title }}</div>
+        <div class="job-card-company">🏢 {{ job.company }}</div>
+        <div class="job-meta">
+          <span class="job-meta-item">📍 {{ job.location }}</span>
+          {% if job.salary %}<span class="job-meta-item">💰 {{ job.salary }}</span>{% endif %}
+          <span class="job-meta-item">📅 {{ job.posted_date }}</span>
+        </div>
+        <p class="job-desc">{{ job.description[:160] }}{% if job.description|length > 160 %}...{% endif %}</p>
+        <div class="job-card-footer">
+          {% if session.get('user_id') %}
+            {% if job.id in applied_ids %}
+              <span class="badge badge-success" style="padding:.45rem .9rem;">✅ Applied</span>
+            {% else %}
+              <a href="{{ url_for('apply', job_id=job.id) }}" class="btn btn-primary btn-sm">Apply Now</a>
+            {% endif %}
+          {% else %}
+            <a href="{{ url_for('login') }}" class="btn btn-outline btn-sm">Login to Apply</a>
+          {% endif %}
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+  {% else %}
+    <div class="empty-state">
+      <div class="empty-icon">🔍</div>
+      <h3>No jobs found</h3>
+      <p>Try a different search term or check back later.</p>
+    </div>
+  {% endif %}
+</div>
+{% endblock %}

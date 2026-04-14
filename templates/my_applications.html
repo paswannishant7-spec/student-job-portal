@@ -1,0 +1,52 @@
+{% extends "base.html" %}
+{% block title %}My Applications – Student Job Portal{% endblock %}
+
+{% block content %}
+<div class="container page-wrapper">
+  <div class="page-header">
+    <h1>📋 My Applications</h1>
+    <p>Track all the jobs you have applied for.</p>
+  </div>
+
+  <div class="card">
+    {% if apps %}
+      <div class="table-wrapper">
+        <table>
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>Job Title</th>
+              <th>Company</th>
+              <th>Location</th>
+              <th>Salary</th>
+              <th>Applied On</th>
+              <th>Status</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for app in apps %}
+            <tr>
+              <td>{{ loop.index }}</td>
+              <td><strong>{{ app.title }}</strong></td>
+              <td>{{ app.company }}</td>
+              <td>📍 {{ app.location }}</td>
+              <td>{{ app.salary or '–' }}</td>
+              <td>{{ app.date }}</td>
+              <td><span class="badge badge-primary">Submitted</span></td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+    {% else %}
+      <div class="empty-state">
+        <div class="empty-icon">📭</div>
+        <h3>No applications yet</h3>
+        <p>You haven't applied to any jobs. Start applying today!</p>
+        <br>
+        <a href="{{ url_for('jobs') }}" class="btn btn-primary">Browse Jobs</a>
+      </div>
+    {% endif %}
+  </div>
+</div>
+{% endblock %}

@@ -1,0 +1,58 @@
+{% extends "base.html" %}
+{% block title %}Manage Jobs – Admin{% endblock %}
+
+{% block content %}
+<div class="container page-wrapper">
+  <div class="page-header" style="display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:1rem;">
+    <div>
+      <h1>💼 Manage Jobs</h1>
+      <p>Add, view, and delete job listings.</p>
+    </div>
+    <a href="{{ url_for('add_job') }}" class="btn btn-primary">➕ Add New Job</a>
+  </div>
+
+  <div class="card">
+    {% if jobs %}
+      <div class="table-wrapper">
+        <table>
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>Job Title</th>
+              <th>Company</th>
+              <th>Location</th>
+              <th>Salary</th>
+              <th>Posted</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for job in jobs %}
+            <tr>
+              <td>{{ loop.index }}</td>
+              <td><strong>{{ job.title }}</strong></td>
+              <td>{{ job.company }}</td>
+              <td>{{ job.location }}</td>
+              <td>{{ job.salary or '–' }}</td>
+              <td>{{ job.posted_date }}</td>
+              <td>
+                <form method="POST" action="{{ url_for('delete_job', job_id=job.id) }}"
+                      onsubmit="return confirm('Delete job: {{ job.title }}? This will also remove all applications for this job.')">
+                  <button type="submit" class="btn btn-danger btn-sm">🗑 Delete</button>
+                </form>
+              </td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+    {% else %}
+      <div class="empty-state">
+        <div class="empty-icon">📭</div>
+        <h3>No jobs posted yet</h3>
+        <a href="{{ url_for('add_job') }}" class="btn btn-primary" style="margin-top:1rem;">Add First Job</a>
+      </div>
+    {% endif %}
+  </div>
+</div>
+{% endblock %}

@@ -1,0 +1,56 @@
+{% extends "base.html" %}
+{% block title %}Apply – {{ job.title }}{% endblock %}
+
+{% block content %}
+<div class="container page-wrapper" style="max-width:680px;">
+  <a href="{{ url_for('jobs') }}" style="display:inline-flex; align-items:center; gap:.4rem; color:#64748b; font-size:.9rem; margin-bottom:1.5rem;">
+    ← Back to Jobs
+  </a>
+
+  <!-- Job Summary Card -->
+  <div class="card" style="margin-bottom:1.5rem;">
+    <div class="card-body">
+      <h2 style="font-size:1.4rem; font-weight:800; margin-bottom:.3rem;">{{ job.title }}</h2>
+      <p style="color:#64748b; margin-bottom:.75rem;">🏢 {{ job.company }}</p>
+      <div class="job-meta">
+        <span class="job-meta-item">📍 {{ job.location }}</span>
+        {% if job.salary %}<span class="job-meta-item">💰 {{ job.salary }}</span>{% endif %}
+        <span class="job-meta-item">📅 Posted: {{ job.posted_date }}</span>
+      </div>
+      <hr class="divider">
+      <h4 style="font-size:.9rem; font-weight:700; margin-bottom:.5rem; color:#334155;">Job Description</h4>
+      <p style="font-size:.9rem; color:#475569; line-height:1.7;">{{ job.description }}</p>
+    </div>
+  </div>
+
+  <!-- Application Form -->
+  <div class="card">
+    <div class="card-header"><h2>📄 Submit Your Application</h2></div>
+    <div class="card-body">
+      <form method="POST" enctype="multipart/form-data" action="{{ url_for('apply', job_id=job.id) }}">
+        <div class="form-group">
+          <label class="form-label">Applying as</label>
+          <input class="form-control" type="text" value="{{ session.name }}" disabled>
+        </div>
+        <div class="form-group">
+          <label class="form-label" for="resume">Upload Resume *</label>
+          <input class="form-control" type="file" id="resume" name="resume"
+                 accept=".pdf,.doc,.docx" required>
+          <p class="form-hint">📎 Accepted formats: PDF, DOC, DOCX &nbsp;|&nbsp; Max size: 5 MB</p>
+        </div>
+
+        <div style="background:#eff6ff; border:1px solid #bfdbfe; border-radius:8px; padding:1rem; margin-bottom:1.5rem; font-size:.87rem; color:#1e40af;">
+          <strong>ℹ️ Note:</strong> Make sure your resume includes your name, contact number, qualification, and skills. Upload a clean PDF for best results.
+        </div>
+
+        <div style="display:flex; gap:.75rem; flex-wrap:wrap;">
+          <button type="submit" class="btn btn-success btn-lg">
+            🚀 Submit Application
+          </button>
+          <a href="{{ url_for('jobs') }}" class="btn btn-secondary btn-lg">Cancel</a>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+{% endblock %}

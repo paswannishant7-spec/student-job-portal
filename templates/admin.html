@@ -1,0 +1,91 @@
+{% extends "base.html" %}
+{% block title %}Admin Dashboard – Student Job Portal{% endblock %}
+
+{% block content %}
+<div class="container page-wrapper">
+  <div class="page-header">
+    <h1>🛠️ Admin Dashboard</h1>
+    <p>Manage jobs and view student applications.</p>
+  </div>
+
+  <!-- Stats -->
+  <div class="stats-grid">
+    <div class="stat-card">
+      <div class="stat-icon blue">👨‍🎓</div>
+      <div>
+        <div class="stat-value">{{ total_students }}</div>
+        <div class="stat-label">Registered Students</div>
+      </div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-icon green">💼</div>
+      <div>
+        <div class="stat-value">{{ total_jobs }}</div>
+        <div class="stat-label">Active Jobs</div>
+      </div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-icon purple">📋</div>
+      <div>
+        <div class="stat-value">{{ total_apps }}</div>
+        <div class="stat-label">Total Applications</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Quick Actions -->
+  <div class="card" style="margin-bottom:2rem;">
+    <div class="card-header"><h2>⚡ Quick Actions</h2></div>
+    <div class="card-body" style="display:flex; gap:1rem; flex-wrap:wrap;">
+      <a href="{{ url_for('add_job') }}"            class="btn btn-primary">➕ Add New Job</a>
+      <a href="{{ url_for('admin_jobs') }}"          class="btn btn-secondary">💼 Manage Jobs</a>
+      <a href="{{ url_for('admin_applications') }}"  class="btn btn-secondary">📋 All Applications</a>
+    </div>
+  </div>
+
+  <!-- Recent Applications -->
+  <div class="card">
+    <div class="card-header">
+      <h2>🆕 Recent Applications</h2>
+      <a href="{{ url_for('admin_applications') }}" class="btn btn-outline btn-sm">View All →</a>
+    </div>
+    {% if recent_apps %}
+      <div class="table-wrapper">
+        <table>
+          <thead>
+            <tr>
+              <th>Student</th>
+              <th>Email</th>
+              <th>Job</th>
+              <th>Company</th>
+              <th>Date</th>
+              <th>Resume</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for app in recent_apps %}
+            <tr>
+              <td><strong>{{ app.student_name }}</strong></td>
+              <td>{{ app.email }}</td>
+              <td>{{ app.title }}</td>
+              <td>{{ app.company }}</td>
+              <td>{{ app.date }}</td>
+              <td>
+                <a href="{{ url_for('download_resume', filename=app.resume) }}"
+                   class="btn btn-success btn-sm">⬇ Download</a>
+              </td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+    {% else %}
+      <div class="empty-state">
+        <div class="empty-icon">📭</div>
+        <h3>No applications yet</h3>
+        <p>Students haven't applied to any jobs yet.</p>
+      </div>
+    {% endif %}
+  </div>
+</div>
+{% endblock %}

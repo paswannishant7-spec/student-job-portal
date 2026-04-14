@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{% block title %}Student Job Portal{% endblock %}</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🎓</text></svg>">
+</head>
+<body>
+
+<!-- ── Navbar ── -->
+<nav class="navbar">
+  <a class="navbar-brand" href="{{ url_for('index') }}">
+    🎓 Student<span>Jobs</span>
+  </a>
+  <div class="navbar-links">
+    {% if session.get('role') == 'admin' %}
+      <a href="{{ url_for('admin_dashboard') }}">Dashboard</a>
+      <a href="{{ url_for('admin_jobs') }}">Jobs</a>
+      <a href="{{ url_for('admin_applications') }}">Applications</a>
+      <a href="{{ url_for('add_job') }}">+ Add Job</a>
+      <a href="{{ url_for('logout') }}" class="btn-nav">Logout</a>
+    {% elif session.get('user_id') %}
+      <a href="{{ url_for('dashboard') }}">Dashboard</a>
+      <a href="{{ url_for('jobs') }}">Browse Jobs</a>
+      <a href="{{ url_for('my_applications') }}">My Applications</a>
+      <a href="{{ url_for('logout') }}" class="btn-nav">Logout</a>
+    {% else %}
+      <a href="{{ url_for('jobs') }}">Browse Jobs</a>
+      <a href="{{ url_for('login') }}">Login</a>
+      <a href="{{ url_for('register') }}" class="btn-nav">Register</a>
+    {% endif %}
+  </div>
+</nav>
+
+<main class="main-content">
+  <!-- Flash messages -->
+  {% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}
+      <div class="container" style="padding-top:1rem;">
+        {% for category, message in messages %}
+          <div class="alert alert-{{ category }}">
+            <span>
+              {% if category == 'success' %}✅{% elif category == 'danger' %}❌{% elif category == 'warning' %}⚠️{% else %}ℹ️{% endif %}
+            </span>
+            {{ message }}
+          </div>
+        {% endfor %}
+      </div>
+    {% endif %}
+  {% endwith %}
+
+  {% block content %}{% endblock %}
+</main>
+
+<footer>
+  <p>© 2024 StudentJobs Portal &mdash; Built for ITI COPA Students &nbsp;|&nbsp; <a href="#">Contact</a></p>
+</footer>
+
+</body>
+</html>
