@@ -3,47 +3,62 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
   <title>{% block title %}Student Job Portal{% endblock %}</title>
+
   <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
   <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🎓</text></svg>">
 </head>
+
 <body>
 
-<!-- ── Navbar ── -->
 <nav class="navbar">
-  <a class="navbar-brand" href="{{ url_for('index') }}">
-    🎓 Student<span>Jobs</span>
-  </a>
-  <div class="navbar-links">
-    {% if session.get('role') == 'admin' %}
-      <a href="{{ url_for('admin_dashboard') }}">Dashboard</a>
-      <a href="{{ url_for('admin_jobs') }}">Jobs</a>
-      <a href="{{ url_for('admin_applications') }}">Applications</a>
-      <a href="{{ url_for('add_job') }}">+ Add Job</a>
-      <a href="{{ url_for('logout') }}" class="btn-nav">Logout</a>
-    {% elif session.get('user_id') %}
-      <a href="{{ url_for('dashboard') }}">Dashboard</a>
-      <a href="{{ url_for('jobs') }}">Browse Jobs</a>
-      <a href="{{ url_for('my_applications') }}">My Applications</a>
-      <a href="{{ url_for('logout') }}" class="btn-nav">Logout</a>
-    {% else %}
-      <a href="{{ url_for('jobs') }}">Browse Jobs</a>
-      <a href="{{ url_for('login') }}">Login</a>
-      <a href="{{ url_for('register') }}" class="btn-nav">Register</a>
-    {% endif %}
+  <div class="nav-container">
+
+    <a class="logo" href="{{ url_for('index') }}">
+      🎓 Student<span>Jobs</span>
+    </a>
+
+    <div class="nav-links">
+
+      {% if session.get('role') == 'admin' %}
+
+        <a href="{{ url_for('admin_dashboard') }}">Dashboard</a>
+        <a href="{{ url_for('admin_jobs') }}">Jobs</a>
+        <a href="{{ url_for('admin_applications') }}">Applications</a>
+        <a class="btn-primary" href="{{ url_for('add_job') }}">+ Add Job</a>
+        <a class="btn-outline" href="{{ url_for('logout') }}">Logout</a>
+
+      {% elif session.get('user_id') %}
+
+        <a href="{{ url_for('dashboard') }}">Dashboard</a>
+        <a href="{{ url_for('jobs') }}">Browse Jobs</a>
+        <a href="{{ url_for('my_applications') }}">My Applications</a>
+        <a class="btn-outline" href="{{ url_for('logout') }}">Logout</a>
+
+      {% else %}
+
+        <a href="{{ url_for('jobs') }}">Browse Jobs</a>
+        <a href="{{ url_for('login') }}">Login</a>
+        <a class="btn-primary" href="{{ url_for('register') }}">Register</a>
+
+      {% endif %}
+
+    </div>
   </div>
 </nav>
 
 <main class="main-content">
-  <!-- Flash messages -->
+
   {% with messages = get_flashed_messages(with_categories=true) %}
     {% if messages %}
-      <div class="container" style="padding-top:1rem;">
+      <div class="flash-wrapper">
         {% for category, message in messages %}
-          <div class="alert alert-{{ category }}">
-            <span>
-              {% if category == 'success' %}✅{% elif category == 'danger' %}❌{% elif category == 'warning' %}⚠️{% else %}ℹ️{% endif %}
-            </span>
+          <div class="alert {{ category }}">
+            {% if category == 'success' %}✅{% elif category == 'danger' %}❌{% elif category == 'warning' %}⚠️{% else %}ℹ️{% endif %}
             {{ message }}
           </div>
         {% endfor %}
@@ -52,12 +67,18 @@
   {% endwith %}
 
   {% block content %}{% endblock %}
+
 </main>
 
-<footer>
-    © 2026 StudentJobs Portal — Built By ITI COPA Student Nishant Paswan |
-    GitHub: <a href="https://github.com/paswannishant7-spec" target="_blank">paswannishant7-spec</a> |
-    Instagram: <a href="https://www.instagram.com/nishant._2002_?igsh=MXJ0MDlqOWJiaDJqbA==" target="_blank">nishant._2002_</a>
+<footer class="footer">
+  <div class="footer-container">
+    <p>© 2026 <strong>StudentJobs Portal</strong> — Built by Nishant Paswan</p>
+
+    <div class="footer-links">
+      <a href="https://github.com/paswannishant7-spec" target="_blank">GitHub</a>
+      <a href="https://www.instagram.com/nishant._2002_?igsh=MXJ0MDlqOWJiaDJqbA==" target="_blank">Instagram</a>
+    </div>
+  </div>
 </footer>
 
 </body>

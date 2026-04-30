@@ -2,51 +2,84 @@
 {% block title %}Add Job – Admin{% endblock %}
 
 {% block content %}
-<div class="container page-wrapper" style="max-width:680px;">
-  <a href="{{ url_for('admin_jobs') }}" style="display:inline-flex; align-items:center; gap:.4rem; color:#64748b; font-size:.9rem; margin-bottom:1.5rem;">
+
+<div class="section-container" style="max-width:800px;">
+
+  <!-- BACK -->
+  <a href="{{ url_for('admin_jobs') }}" style="color:#94a3b8; display:inline-block; margin-bottom:20px;">
     ← Back to Jobs
   </a>
 
-  <div class="card">
-    <div class="card-header"><h2>➕ Post a New Job</h2></div>
-    <div class="card-body">
-      <form method="POST" action="{{ url_for('add_job') }}">
-        <div class="form-group">
-          <label class="form-label" for="title">Job Title *</label>
-          <input class="form-control" type="text" id="title" name="title"
-                 placeholder="e.g. Computer Operator" required maxlength="150"
-                 value="{{ request.form.get('title','') }}">
-        </div>
-        <div class="form-group">
-          <label class="form-label" for="company">Company Name *</label>
-          <input class="form-control" type="text" id="company" name="company"
-                 placeholder="e.g. TechSoft Pvt. Ltd." required maxlength="150"
-                 value="{{ request.form.get('company','') }}">
-        </div>
-        <div class="form-group">
-          <label class="form-label" for="location">Location *</label>
-          <input class="form-control" type="text" id="location" name="location"
-                 placeholder="e.g. Delhi, Noida, Faridabad" required maxlength="100"
-                 value="{{ request.form.get('location','') }}">
-        </div>
-        <div class="form-group">
-          <label class="form-label" for="salary">Salary (Optional)</label>
-          <input class="form-control" type="text" id="salary" name="salary"
-                 placeholder="e.g. ₹15,000 – ₹20,000/month" maxlength="100"
-                 value="{{ request.form.get('salary','') }}">
-        </div>
-        <div class="form-group">
-          <label class="form-label" for="description">Job Description *</label>
-          <textarea class="form-control" id="description" name="description"
-                    placeholder="Write the full job description, required skills, and qualifications..."
-                    required rows="6">{{ request.form.get('description','') }}</textarea>
-        </div>
-        <div style="display:flex; gap:.75rem; flex-wrap:wrap;">
-          <button type="submit" class="btn btn-primary btn-lg">Post Job</button>
-          <a href="{{ url_for('admin_jobs') }}" class="btn btn-secondary btn-lg">Cancel</a>
-        </div>
-      </form>
-    </div>
+  <!-- HEADER -->
+  <div class="page-header">
+    <h1>➕ Post a New Job</h1>
+    <p class="subtext">Create a new job listing for students</p>
   </div>
+
+  <!-- FORM CARD -->
+  <div class="card">
+
+    <form method="POST" action="{{ url_for('add_job') }}">
+
+      <div class="form-group">
+        <label>Job Title *</label>
+        <input type="text"
+               name="title"
+               placeholder="e.g. Computer Operator"
+               value="{{ request.form.get('title','') }}"
+               required>
+      </div>
+
+      <div class="form-group">
+        <label>Company Name *</label>
+        <input type="text"
+               name="company"
+               placeholder="e.g. TechSoft Pvt Ltd"
+               value="{{ request.form.get('company','') }}"
+               required>
+      </div>
+
+      <div class="form-group">
+        <label>Location *</label>
+        <input type="text"
+               name="location"
+               placeholder="e.g. Delhi, Noida"
+               value="{{ request.form.get('location','') }}"
+               required>
+      </div>
+
+      <div class="form-group">
+        <label>Salary (Optional)</label>
+        <input type="text"
+               name="salary"
+               placeholder="e.g. ₹15,000 - ₹20,000/month"
+               value="{{ request.form.get('salary','') }}">
+      </div>
+
+      <div class="form-group">
+        <label>Job Description *</label>
+        <textarea name="description"
+                  rows="6"
+                  placeholder="Write job responsibilities, skills, requirements..."
+                  required>{{ request.form.get('description','') }}</textarea>
+      </div>
+
+      <div style="display:flex; gap:10px; flex-wrap:wrap; margin-top:20px;">
+
+        <button type="submit" class="btn-primary">
+          Post Job
+        </button>
+
+        <a href="{{ url_for('admin_jobs') }}" class="btn-outline">
+          Cancel
+        </a>
+
+      </div>
+
+    </form>
+
+  </div>
+
 </div>
+
 {% endblock %}

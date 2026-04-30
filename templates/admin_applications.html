@@ -2,54 +2,87 @@
 {% block title %}All Applications – Admin{% endblock %}
 
 {% block content %}
-<div class="container page-wrapper">
+
+<div class="section-container">
+
+  <!-- HEADER -->
   <div class="page-header">
     <h1>📋 All Applications</h1>
-    <p>{{ apps|length }} application(s) received so far. Download resumes below.</p>
+    <p class="subtext">{{ apps|length }} application(s) received</p>
   </div>
 
+  <!-- TABLE CARD -->
   <div class="card">
+
     {% if apps %}
-      <div class="table-wrapper">
-        <table>
+
+      <div style="overflow-x:auto;">
+
+        <table style="width:100%; border-collapse:collapse;">
+
           <thead>
-            <tr>
-              <th>#</th>
-              <th>Student Name</th>
+            <tr style="text-align:left; border-bottom:1px solid #334155;">
+              <th style="padding:10px;">#</th>
+              <th>Student</th>
               <th>Email</th>
-              <th>Job Title</th>
+              <th>Job</th>
               <th>Company</th>
               <th>Location</th>
-              <th>Applied On</th>
+              <th>Date</th>
               <th>Resume</th>
             </tr>
           </thead>
+
           <tbody>
+
             {% for app in apps %}
-            <tr>
-              <td>{{ loop.index }}</td>
+            <tr style="border-bottom:1px solid #1e293b;">
+
+              <td style="padding:10px;">{{ loop.index }}</td>
+
               <td><strong>{{ app.student_name }}</strong></td>
+
               <td>{{ app.email }}</td>
+
               <td>{{ app.title }}</td>
+
               <td>{{ app.company }}</td>
+
               <td>{{ app.location }}</td>
+
               <td>{{ app.date }}</td>
+
               <td>
+
                 <a href="{{ url_for('download_resume', filename=app.resume) }}"
-                   class="btn btn-success btn-sm">⬇ Download</a>
+                   class="btn-primary">
+
+                  Download
+
+                </a>
+
               </td>
+
             </tr>
             {% endfor %}
+
           </tbody>
+
         </table>
+
       </div>
+
     {% else %}
-      <div class="empty-state">
-        <div class="empty-icon">📭</div>
-        <h3>No applications received yet</h3>
-        <p>Students haven't applied to any jobs yet.</p>
+
+      <div class="cta">
+        <h2>No Applications Yet</h2>
+        <p>Students haven’t applied to any jobs yet</p>
       </div>
+
     {% endif %}
+
   </div>
+
 </div>
+
 {% endblock %}

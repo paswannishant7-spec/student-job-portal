@@ -2,54 +2,70 @@
 {% block title %}Student Job Portal – Find Your First Job{% endblock %}
 
 {% block content %}
-<!-- Hero -->
+
 <section class="hero">
-  <div class="container">
+  <div class="hero-container">
+
     <h1>Find Your Dream Job 🚀</h1>
-    <p>India's job portal designed especially for ITI COPA students and computer-trained freshers. Register today and start applying!</p>
-    <div class="hero-btns">
-      <a href="{{ url_for('register') }}" class="btn btn-white btn-lg">Get Started Free</a>
-      <a href="{{ url_for('jobs') }}"     class="btn btn-ghost btn-lg">Browse Jobs</a>
+
+    <p>
+      India’s job portal for ITI COPA students and freshers. Build your career with real opportunities and simple applications.
+    </p>
+
+    <div class="hero-buttons">
+      <a href="{{ url_for('register') }}" class="btn-primary">Get Started Free</a>
+      <a href="{{ url_for('jobs') }}" class="btn-outline">Browse Jobs</a>
     </div>
+
   </div>
 </section>
 
-<!-- Features -->
 <section class="features">
-  <div class="container">
+  <div class="section-container">
+
     <h2>Why Choose StudentJobs?</h2>
-    <p class="features-subtitle">Everything you need to land your first job — in one place.</p>
-    <div class="features-grid">
-      <div class="feature-item">
-        <div class="feature-icon">📋</div>
+    <p class="subtext">Everything you need to start your career in one place</p>
+
+    <div class="grid">
+
+      <div class="card">
+        <div class="icon">📋</div>
         <h3>Easy Registration</h3>
-        <p>Create your free account in seconds. No complex forms, just your basic details.</p>
+        <p>Create your account in seconds with simple details.</p>
       </div>
-      <div class="feature-item">
-        <div class="feature-icon">🔍</div>
-        <h3>Browse & Search Jobs</h3>
-        <p>Filter jobs by title, company, or location. New IT jobs posted daily.</p>
+
+      <div class="card">
+        <div class="icon">🔍</div>
+        <h3>Smart Job Search</h3>
+        <p>Find jobs by title, company, and location easily.</p>
       </div>
-      <div class="feature-item">
-        <div class="feature-icon">📄</div>
+
+      <div class="card">
+        <div class="icon">📄</div>
         <h3>Resume Upload</h3>
-        <p>Upload your resume (PDF/DOC/DOCX) directly while applying. Safe & secure.</p>
+        <p>Upload resume and apply instantly to jobs.</p>
       </div>
-      <div class="feature-item">
-        <div class="feature-icon">✅</div>
+
+      <div class="card">
+        <div class="icon">📊</div>
         <h3>Track Applications</h3>
-        <p>View all your job applications in one dashboard. Know your status anytime.</p>
+        <p>Monitor all your job applications in one dashboard.</p>
       </div>
+
     </div>
+
   </div>
 </section>
 
-<!-- CTA -->
-<section style="background:#fff; padding:4rem 0; text-align:center; border-top:1px solid #e2e8f0;">
-  <div class="container">
-    <h2 style="font-size:1.8rem; font-weight:800; margin-bottom:.75rem;">Ready to start your career?</h2>
-    <p style="color:#64748b; margin-bottom:2rem;">Join hundreds of ITI students who have already found jobs through our portal.</p>
-    <a href="{{ url_for('register') }}" class="btn btn-primary btn-lg">Create Free Account</a>
+<section class="cta">
+  <div class="cta-container">
+
+    <h2>Ready to start your career?</h2>
+    <p>Join students already getting placed through our platform</p>
+
+    <a href="{{ url_for('register') }}" class="btn-primary">Create Free Account</a>
+
   </div>
 </section>
+
 {% endblock %}

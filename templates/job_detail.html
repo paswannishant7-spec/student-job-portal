@@ -1,0 +1,72 @@
+{% extends "base.html" %}
+{% block title %}{{ job.title }} – Job Details{% endblock %}
+
+{% block content %}
+
+<div class="section-container" style="max-width:900px;">
+
+  <!-- BACK -->
+  <a href="{{ url_for('jobs') }}" style="color:#94a3b8; display:inline-block; margin-bottom:20px;">
+    ← Back to Jobs
+  </a>
+
+  <!-- JOB HEADER -->
+  <div class="card">
+
+    <h1>{{ job.title }}</h1>
+
+    <div class="job-meta">
+      <span>🏢 {{ job.company }}</span>
+      <span>📍 {{ job.location }}</span>
+      {% if job.salary %}
+        <span>💰 {{ job.salary }}</span>
+      {% endif %}
+      <span>📅 {{ job.posted_date }}</span>
+    </div>
+
+  </div>
+
+  <!-- DESCRIPTION -->
+  <div class="card" style="margin-top:20px;">
+
+    <h2>📄 Job Description</h2>
+
+    <p style="line-height:1.7; margin-top:10px; color:#cbd5e1;">
+      {{ job.description }}
+    </p>
+
+  </div>
+
+  <!-- ACTION BOX -->
+  <div class="card" style="margin-top:20px; text-align:center;">
+
+    <h2>Interested in this job?</h2>
+    <p class="subtext">Apply now and start your career journey</p>
+
+    <div style="display:flex; gap:10px; justify-content:center; flex-wrap:wrap; margin-top:20px;">
+
+      {% if session.get('user_id') %}
+
+        <a href="{{ url_for('apply', job_id=job.id) }}" class="btn-primary">
+          🚀 Apply Now
+        </a>
+
+      {% else %}
+
+        <a href="{{ url_for('login') }}" class="btn-primary">
+          Login to Apply
+        </a>
+
+      {% endif %}
+
+      <a href="{{ url_for('jobs') }}" class="btn-outline">
+        Browse More Jobs
+      </a>
+
+    </div>
+
+  </div>
+
+</div>
+
+{% endblock %}

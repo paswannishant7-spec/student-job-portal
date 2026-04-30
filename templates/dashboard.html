@@ -2,78 +2,101 @@
 {% block title %}Dashboard – Student Job Portal{% endblock %}
 
 {% block content %}
-<div class="container page-wrapper">
+
+<div class="section-container">
+
+  <!-- HEADER -->
   <div class="page-header">
     <h1>👋 Welcome, {{ session.name }}!</h1>
-    <p>Here's a summary of your job search activity.</p>
+    <p class="subtext">Your job search overview</p>
   </div>
 
-  <!-- Stats -->
-  <div class="stats-grid">
-    <div class="stat-card">
-      <div class="stat-icon blue">💼</div>
-      <div>
-        <div class="stat-value">{{ total_jobs }}</div>
-        <div class="stat-label">Jobs Available</div>
-      </div>
+  <!-- STATS -->
+  <div class="grid">
+
+    <div class="card">
+      <div class="icon">💼</div>
+      <h3>{{ total_jobs }}</h3>
+      <p>Jobs Available</p>
     </div>
-    <div class="stat-card">
-      <div class="stat-icon green">📋</div>
-      <div>
-        <div class="stat-value">{{ my_apps }}</div>
-        <div class="stat-label">Applications Sent</div>
-      </div>
+
+    <div class="card">
+      <div class="icon">📋</div>
+      <h3>{{ my_apps }}</h3>
+      <p>Applications Sent</p>
     </div>
-    <div class="stat-card">
-      <div class="stat-icon purple">🎓</div>
-      <div>
-        <div class="stat-value">ITI</div>
-        <div class="stat-label">COPA Student</div>
-      </div>
+
+    <div class="card">
+      <div class="icon">🎓</div>
+      <h3>ITI</h3>
+      <p>COPA Student</p>
     </div>
+
   </div>
 
-  <!-- Quick Actions -->
-  <div class="card" style="margin-bottom:2rem;">
-    <div class="card-header"><h2>⚡ Quick Actions</h2></div>
-    <div class="card-body" style="display:flex; gap:1rem; flex-wrap:wrap;">
-      <a href="{{ url_for('jobs') }}" class="btn btn-primary">🔍 Browse All Jobs</a>
-      <a href="{{ url_for('my_applications') }}" class="btn btn-secondary">📋 My Applications</a>
+  <!-- QUICK ACTIONS -->
+  <div class="cta" style="margin-top:40px;">
+
+    <h2>⚡ Quick Actions</h2>
+    <p>Do more in less time</p>
+
+    <div style="display:flex; gap:10px; justify-content:center; flex-wrap:wrap; margin-top:20px;">
+
+      <a href="{{ url_for('jobs') }}" class="btn-primary">Browse Jobs</a>
+
+      <a href="{{ url_for('my_applications') }}" class="btn-outline">My Applications</a>
+
     </div>
+
   </div>
 
-  <!-- Recently Posted Jobs -->
-  <div class="card">
-    <div class="card-header">
-      <h2>🆕 Recently Posted Jobs</h2>
-      <a href="{{ url_for('jobs') }}" class="btn btn-outline btn-sm">View All →</a>
-    </div>
-    <div class="card-body" style="padding:1.5rem;">
-      {% if recent_jobs %}
-        <div class="jobs-grid">
-          {% for job in recent_jobs %}
-          <div class="job-card">
-            <div class="job-card-title">{{ job.title }}</div>
-            <div class="job-card-company">🏢 {{ job.company }}</div>
-            <div class="job-meta">
-              <span class="job-meta-item">📍 {{ job.location }}</span>
-              {% if job.salary %}<span class="job-meta-item">💰 {{ job.salary }}</span>{% endif %}
-            </div>
-            <p class="job-desc">{{ job.description[:120] }}{% if job.description|length > 120 %}...{% endif %}</p>
-            <div class="job-card-footer">
-              <a href="{{ url_for('apply', job_id=job.id) }}" class="btn btn-primary btn-sm">Apply Now</a>
-            </div>
+  <!-- RECENT JOBS -->
+  <div style="margin-top:50px;">
+
+    <h2 style="text-align:center;">🆕 Recently Posted Jobs</h2>
+    <p class="subtext" style="text-align:center;">Latest opportunities for you</p>
+
+    {% if recent_jobs %}
+
+      <div class="jobs-grid">
+
+        {% for job in recent_jobs %}
+        <div class="job-card">
+
+          <h3>{{ job.title }}</h3>
+
+          <div class="job-meta">
+            <span>🏢 {{ job.company }}</span>
+            <span>📍 {{ job.location }}</span>
+            {% if job.salary %}
+              <span>💰 {{ job.salary }}</span>
+            {% endif %}
           </div>
-          {% endfor %}
+
+          <p class="job-desc">
+            {{ job.description[:120] }}{% if job.description|length > 120 %}...{% endif %}
+          </p>
+
+          <a href="{{ url_for('apply', job_id=job.id) }}" class="btn-primary">
+            Apply Now
+          </a>
+
         </div>
-      {% else %}
-        <div class="empty-state">
-          <div class="empty-icon">📭</div>
-          <h3>No jobs posted yet</h3>
-          <p>Check back soon!</p>
-        </div>
-      {% endif %}
-    </div>
+        {% endfor %}
+
+      </div>
+
+    {% else %}
+
+      <div class="cta">
+        <h2>No Jobs Posted Yet</h2>
+        <p>Check back soon for new opportunities</p>
+      </div>
+
+    {% endif %}
+
   </div>
+
 </div>
+
 {% endblock %}
